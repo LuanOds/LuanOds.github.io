@@ -113,7 +113,6 @@ body {
     opacity: 1;
 }
 
-/* ============ LOADING SCREEN ============ */
 .loading-screen {
     position: fixed;
     top: 0;
@@ -139,6 +138,11 @@ body {
     position: relative;
     margin: 0 auto 20px;
     animation: pulse 1.5s infinite ease-in-out;
+    display: none; /* Escondido por padrão */
+}
+
+.loading-screen .hexagon {
+    display: block; /* Visível apenas no loading */
 }
 
 .hexagon:before,
@@ -165,6 +169,38 @@ body {
     font-size: 1.2rem;
     letter-spacing: 2px;
 }
+
+/* HEXAGON CENTER (hero) - Garantir que não aparece durante loading */
+.loading-screen .hexagon-center {
+    display: none;
+}
+
+/* Ajustes para mobile */
+@media (max-width: 768px) {
+    .loading-screen .hexagon {
+        width: 50px;
+        height: 28.87px;
+    }
+    
+    .loading-screen .hexagon:before,
+    .loading-screen .hexagon:after {
+        border-left: 25px solid transparent;
+        border-right: 25px solid transparent;
+    }
+    
+    .loading-screen .hexagon:before {
+        border-bottom: 14.43px solid var(--primary-color);
+    }
+    
+    .loading-screen .hexagon:after {
+        border-top: 14.43px solid var(--primary-color);
+    }
+    
+    .loading-screen p {
+        font-size: 1rem;
+    }
+}
+
 
 @keyframes pulse {
     0%, 100% {
