@@ -1081,6 +1081,43 @@ html, body {
     margin-bottom: 20px;
 }
 
+/* Estilos para o Simulador - Garantindo alinhamento */
+.simulator-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 600px; /* Ajuste conforme necessário */
+    margin: 0 auto;
+    text-align: center;
+}
+
+.simulator-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(0, 102, 255, 0.2);
+    display: block; /* Remove espaços indesejados */
+}
+
+.simulator-btn {
+    margin-top: 20px;
+    width: 80%;
+    max-width: 200px;
+    position: relative;
+    z-index: 2;
+}
+
+/* Alinhamento responsivo */
+@media (max-width: 768px) {
+    .demo-container {
+        flex-direction: column;
+    }
+    
+    .simulator-wrapper {
+        margin-top: 30px;
+    }
+}
+
 /* Seção de Integrações */
 .app-integrations {
     padding: 80px 0;
