@@ -1,38 +1,35 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Loading screen
+    // Elementos principais
     const loadingScreen = document.getElementById('loadingScreen');
-    
-    // Simulate loading
-    setTimeout(() => {
-        loadingScreen.style.opacity = '0';
-        setTimeout(() => {
-            loadingScreen.style.display = 'none';
-            loadingScreen.classList.add('hide'); // Adiciona classe para controle
-        }, 500);
-    }, 1500);
-    
-    // Header scroll effect
     const header = document.querySelector('.header');
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-            header.classList.add('scrolled');
-        } else {
-            header.classList.remove('scrolled');
-        }
-    });
-    
-    // Mobile menu toggle
     const mobileMenuBtn = document.querySelector('.mobile-menu');
     const nav = document.querySelector('.nav');
     const body = document.body;
     
-    mobileMenuBtn.addEventListener('click', function() {
-        this.classList.toggle('active');
+    // Loading screen
+    setTimeout(() => {
+        loadingScreen.style.opacity = '0';
+        setTimeout(() => {
+            loadingScreen.style.display = 'none';
+            document.body.classList.remove('no-scroll');
+        }, 500);
+    }, 1500);
+
+    // Header scroll effect
+    window.addEventListener('scroll', () => {
+        header.classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    // Mobile menu
+    const toggleMenu = () => {
+        mobileMenuBtn.classList.toggle('active');
         nav.classList.toggle('active');
         body.classList.toggle('no-scroll');
-    });
-    
-    // Close menu when clicking on nav links
+    };
+
+    mobileMenuBtn.addEventListener('click', toggleMenu);
+
+    // Fecha menu ao clicar nos links
     document.querySelectorAll('.nav a').forEach(link => {
         link.addEventListener('click', () => {
             mobileMenuBtn.classList.remove('active');
@@ -40,134 +37,81 @@ document.addEventListener('DOMContentLoaded', function() {
             body.classList.remove('no-scroll');
         });
     });
-    
-    // Smooth scrolling for anchor links
+
+    // Scroll suave
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             e.preventDefault();
-            
-            const targetId = this.getAttribute('href');
-            const targetElement = document.querySelector(targetId);
-            
-            if (targetElement) {
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
                 window.scrollTo({
-                    top: targetElement.offsetTop - 70,
+                    top: target.offsetTop - 70,
                     behavior: 'smooth'
                 });
             }
         });
     });
-    
-    // Animate skill bars
-    const skillBars = document.querySelectorAll('.skill-bar');
-    
-    function animateSkillBars() {
-        skillBars.forEach(bar => {
-            const level = bar.getAttribute('data-level');
-            bar.style.width = '0';
-            
-            setTimeout(() => {
-                bar.style.width = level + '%';
-            }, 100);
-        });
-    }
-    
-    // Animate grid cells
-    function animateGridCells() {
-        const gridCells = document.querySelectorAll('.grid-cell');
-        let delay = 0;
-        
-        gridCells.forEach(cell => {
-            setTimeout(() => {
-                cell.classList.add('active');
-                setTimeout(() => {
-                    cell.classList.remove('active');
-                }, 1000);
-            }, delay);
-            
-            delay += 100;
-        });
-        
-        // Continuous animation
-        setInterval(() => {
-            const randomCell = Math.floor(Math.random() * gridCells.length);
-            gridCells[randomCell].classList.add('active');
-            
-            setTimeout(() => {
-                gridCells[randomCell].classList.remove('active');
-            }, 1000);
-        }, 300);
-    }
-    
-    // Intersection Observer for animations
-    const observerOptions = {
-        threshold: 0.1
-    };
-    
-    const observer = new IntersectionObserver((entries, observer) => {
+
+    // Animações
+    const animateOnScroll = (entries, observer) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                if (entry.target.classList.contains('about-content')) {
-                    animateSkillBars();
+                if (entry.target.classList.contains('skill-bar')) {
+                    entry.target.style.width = entry.target.dataset.level + '%';
                 }
-                
-                if (entry.target.classList.contains('tech-grid')) {
-                    animateGridCells();
-                }
-                
                 observer.unobserve(entry.target);
             }
         });
-    }, observerOptions);
-    
-    const sectionsToObserve = document.querySelectorAll('.about-content, .tech-grid');
-    sectionsToObserve.forEach(section => {
-        observer.observe(section);
-    });
-    
-    // Form submission
+    };
+
+    const observer = new IntersectionObserver(animateOnScroll, { threshold: 0.1 });
+    document.querySelectorAll('.skill-bar, .tech-grid').forEach(el => observer.observe(el));
+
+    // Animação das células da grade
+    const animateGrid = () => {
+        const cells = document.querySelectorAll('.grid-cell');
+        let delay = 0;
+        
+        cells.forEach(cell => {
+            setTimeout(() => cell.classList.add('active'), delay);
+            setTimeout(() => cell.classList.remove('active'), delay + 1000);
+            delay += 100;
+        });
+
+        setInterval(() => {
+            const randomCell = Math.floor(Math.random() * cells.length);
+            cells[randomCell].classList.add('active');
+            setTimeout(() => cells[randomCell].classList.remove('active'), 1000);
+        }, 300);
+    };
+
+    // Formulário
     const contactForm = document.querySelector('.contact-form');
     if (contactForm) {
         contactForm.addEventListener('submit', function(e) {
             e.preventDefault();
-            
-            // Here you would typically send the form data to a server
-            // For demonstration, we'll just show an alert
             alert('Mensagem enviada com sucesso! Entrarei em contato em breve.');
             this.reset();
         });
     }
-    
-    // Handle unavailable buttons
-    document.querySelectorAll('.unavailable').forEach(icon => {
-        icon.addEventListener('click', function(e) {
+
+    // Elementos indisponíveis
+    document.querySelectorAll('.unavailable').forEach(el => {
+        el.addEventListener('click', function(e) {
             e.preventDefault();
-            const networkName = this.getAttribute('data-network') || 'esta aplicação';
-            alert(`Desculpe, ${networkName} ainda não está disponível. Estamos trabalhando nisso!`);
-            
-            // Shake effect for feedback
-            this.style.animation = 'shake 0.5s';
-            setTimeout(() => {
-                this.style.animation = '';
-            }, 500);
+            this.classList.add('shake');
+            setTimeout(() => this.classList.remove('shake'), 500);
+            alert('Esta funcionalidade estará disponível em breve!');
         });
     });
-    
-    // Touch feedback for buttons
-    document.querySelectorAll('a, button').forEach(el => {
-        el.addEventListener('touchstart', function() {
-            this.classList.add('touch-active');
-        }, { passive: true });
-        
-        el.addEventListener('touchend', function() {
-            this.classList.remove('touch-active');
-        }, { passive: true });
-    });
-    
-    // Prevent zoom on input focus in mobile
-    document.addEventListener('touchstart', function(e) {
-        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
-            document.documentElement.style.zoom = '1.0';
-        }
-    }, { passive: true });
+
+    // Hexágono responsivo
+    const handleHexagonResize = () => {
+        const techCircle = document.querySelector('.tech-circle');
+        techCircle.classList.toggle('mobile-view', window.innerWidth <= 768);
+        techCircle.classList.toggle('desktop-view', window.innerWidth > 768);
+    };
+
+    window.addEventListener('load', handleHexagonResize);
+    window.addEventListener('resize', handleHexagonResize);
 });

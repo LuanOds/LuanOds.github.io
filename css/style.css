@@ -139,11 +139,11 @@ body {
     position: relative;
     margin: 0 auto 20px;
     animation: pulse 1.5s infinite ease-in-out;
-    display: none; /* Escondido por padrão */
+    display: none;
 }
 
 .loading-screen .hexagon {
-    display: block; /* Visível apenas no loading */
+    display: block;
 }
 
 .hexagon:before,
@@ -171,79 +171,34 @@ body {
     letter-spacing: 2px;
 }
 
-/* HEXAGON CENTER (hero) - Garantir que não aparece durante loading */
-/* Esconde completamente o hexagon-center durante o loading */
-.loading-screen .hexagon-center {
-    display: none !important;
-    visibility: hidden !important;
-    opacity: 0 !important;
-}
-
-/* Garante que o hexagon de loading seja o único visível */
-.loading-screen .hexagon {
-    display: block;
+/* HEXAGON CENTER (hero) */
+.hexagon-center {
+    position: absolute;
     width: 60px;
     height: 34.64px;
     background-color: var(--primary-color);
-    position: relative;
-    margin: 0 auto 20px;
-    animation: pulse 1.5s infinite ease-in-out;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
-/* Remove qualquer possibilidade do tech-circle aparecer durante loading */
-.loading-screen .tech-circle {
-    display: none !important;
+.hexagon-center:before,
+.hexagon-center:after {
+    content: "";
+    position: absolute;
+    width: 0;
+    border-left: 30px solid transparent;
+    border-right: 30px solid transparent;
 }
 
-/* Ajustes específicos para mobile */
-@media (max-width: 768px) {
-    .loading-screen .hexagon {
-        width: 50px;
-        height: 28.87px;
-    }
-    
-    .loading-screen .hexagon:before,
-    .loading-screen .hexagon:after {
-        border-left: 25px solid transparent;
-        border-right: 25px solid transparent;
-    }
-    
-    .loading-screen .hexagon:before {
-        border-bottom: 14.43px solid var(--primary-color);
-    }
-    
-    .loading-screen .hexagon:after {
-        border-top: 14.43px solid var(--primary-color);
-    }
-    
-    .loading-screen p {
-        font-size: 1rem;
-    }
+.hexagon-center:before {
+    bottom: 100%;
+    border-bottom: 17.32px solid var(--primary-color);
 }
 
-/* Garante que o hexagon normal não seja visível fora do loading */
-.hexagon {
-    display: none;
-}
-
-/* Garante que o hero-visual só apareça após o loading */
-.loading-screen ~ main .hero-visual {
-    visibility: hidden;
-}
-
-.loading-screen.hide ~ main .hero-visual {
-    visibility: visible;
-}
-
-@keyframes pulse {
-    0%, 100% {
-        transform: scale(1);
-        opacity: 1;
-    }
-    50% {
-        transform: scale(1.1);
-        opacity: 0.7;
-    }
+.hexagon-center:after {
+    top: 100%;
+    border-top: 17.32px solid var(--primary-color);
 }
 
 /* ============ HEADER ============ */
@@ -411,35 +366,6 @@ body {
     left: 30%;
     border-color: rgba(255, 51, 102, 0.3);
     animation-duration: 15s;
-}
-
-.hexagon-center {
-    position: absolute;
-    width: 60px;
-    height: 34.64px;
-    background-color: var(--primary-color);
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.hexagon-center:before,
-.hexagon-center:after {
-    content: "";
-    position: absolute;
-    width: 0;
-    border-left: 30px solid transparent;
-    border-right: 30px solid transparent;
-}
-
-.hexagon-center:before {
-    bottom: 100%;
-    border-bottom: 17.32px solid var(--primary-color);
-}
-
-.hexagon-center:after {
-    top: 100%;
-    border-top: 17.32px solid var(--primary-color);
 }
 
 @keyframes rotate {
@@ -808,6 +734,48 @@ body {
         justify-content: center;
     }
     
+    /* Ajustes específicos para o hexágono em mobile */
+    .hexagon-center {
+        display: none;
+    }
+    
+    .tech-circle .hexagon {
+        display: block;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 60px;
+        height: 34.64px;
+        background-color: var(--primary-color);
+        animation: pulse 1.5s infinite ease-in-out;
+    }
+    
+    .tech-circle .hexagon:before,
+    .tech-circle .hexagon:after {
+        content: "";
+        position: absolute;
+        width: 0;
+        border-left: 30px solid transparent;
+        border-right: 30px solid transparent;
+    }
+    
+    .tech-circle .hexagon:before {
+        bottom: 100%;
+        border-bottom: 17.32px solid var(--primary-color);
+    }
+    
+    .tech-circle .hexagon:after {
+        top: 100%;
+        border-top: 17.32px solid var(--primary-color);
+    }
+    
+    .tech-circle {
+        width: 250px;
+        height: 250px;
+        margin: 0 auto;
+    }
+    
     .about-section .container {
         flex-direction: column;
     }
@@ -862,9 +830,40 @@ body {
     .form-group textarea {
         min-height: 120px;
     }
+    
+    /* Ajustes adicionais para o hexágono em telas muito pequenas */
+    .tech-circle .hexagon {
+        width: 50px;
+        height: 28.87px;
+    }
+    
+    .tech-circle .hexagon:before,
+    .tech-circle .hexagon:after {
+        border-left: 25px solid transparent;
+        border-right: 25px solid transparent;
+    }
+    
+    .tech-circle .hexagon:before {
+        border-bottom: 14.43px solid var(--primary-color);
+    }
+    
+    .tech-circle .hexagon:after {
+        border-top: 14.43px solid var(--primary-color);
+    }
 }
 
 /* ============ ANIMAÇÕES ============ */
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 0.7;
+    }
+}
+
 @keyframes shake {
     0%, 100% { transform: translateX(0); }
     20%, 60% { transform: translateX(-5px); }
