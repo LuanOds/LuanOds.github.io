@@ -172,11 +172,30 @@ body {
 }
 
 /* HEXAGON CENTER (hero) - Garantir que não aparece durante loading */
+/* Esconde completamente o hexagon-center durante o loading */
 .loading-screen .hexagon-center {
-    display: none;
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
 }
 
-/* Ajustes para mobile */
+/* Garante que o hexagon de loading seja o único visível */
+.loading-screen .hexagon {
+    display: block;
+    width: 60px;
+    height: 34.64px;
+    background-color: var(--primary-color);
+    position: relative;
+    margin: 0 auto 20px;
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+/* Remove qualquer possibilidade do tech-circle aparecer durante loading */
+.loading-screen .tech-circle {
+    display: none !important;
+}
+
+/* Ajustes específicos para mobile */
 @media (max-width: 768px) {
     .loading-screen .hexagon {
         width: 50px;
@@ -200,6 +219,20 @@ body {
     .loading-screen p {
         font-size: 1rem;
     }
+}
+
+/* Garante que o hexagon normal não seja visível fora do loading */
+.hexagon {
+    display: none;
+}
+
+/* Garante que o hero-visual só apareça após o loading */
+.loading-screen ~ main .hero-visual {
+    visibility: hidden;
+}
+
+.loading-screen.hide ~ main .hero-visual {
+    visibility: visible;
 }
 
 @keyframes pulse {

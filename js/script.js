@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
         loadingScreen.style.opacity = '0';
         setTimeout(() => {
             loadingScreen.style.display = 'none';
+            loadingScreen.classList.add('hide'); // Adiciona classe para controle
         }, 500);
     }, 1500);
     
