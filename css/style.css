@@ -113,6 +113,7 @@ body {
     opacity: 1;
 }
 
+/* ============ LOADING SCREEN ============ */
 .loading-screen {
     position: fixed;
     top: 0;
@@ -200,7 +201,6 @@ body {
         font-size: 1rem;
     }
 }
-
 
 @keyframes pulse {
     0%, 100% {
