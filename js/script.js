@@ -67,23 +67,51 @@ document.addEventListener('DOMContentLoaded', function() {
     const observer = new IntersectionObserver(animateOnScroll, { threshold: 0.1 });
     document.querySelectorAll('.skill-bar, .tech-grid').forEach(el => observer.observe(el));
 
-    // Animação das células da grade
-    const animateGrid = () => {
-        const cells = document.querySelectorAll('.grid-cell');
-        let delay = 0;
+    // Animação das células da grade (tech-grid)
+    const animateGridCells = () => {
+        const gridCells = document.querySelectorAll('.grid-cell');
         
-        cells.forEach(cell => {
-            setTimeout(() => cell.classList.add('active'), delay);
-            setTimeout(() => cell.classList.remove('active'), delay + 1000);
+        // Animação inicial sequencial
+        let delay = 0;
+        gridCells.forEach(cell => {
+            setTimeout(() => {
+                cell.classList.add('active');
+                setTimeout(() => cell.classList.remove('active'), 1000);
+            }, delay);
             delay += 100;
         });
 
-        setInterval(() => {
-            const randomCell = Math.floor(Math.random() * cells.length);
-            cells[randomCell].classList.add('active');
-            setTimeout(() => cells[randomCell].classList.remove('active'), 1000);
-        }, 300);
+        // Animação contínua aleatória
+        const randomGridAnimation = () => {
+            const randomCell = Math.floor(Math.random() * gridCells.length);
+            gridCells[randomCell].classList.add('active');
+            
+            setTimeout(() => {
+                gridCells[randomCell].classList.remove('active');
+            }, 1000);
+        };
+
+        // Inicia a animação contínua após a sequência inicial
+        setTimeout(() => {
+            setInterval(randomGridAnimation, 300);
+        }, delay + 1000);
     };
+
+    // Observador para acionar a animação quando a seção for visível
+    const gridObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateGridCells();
+                gridObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
+
+    const techGrid = document.querySelector('.tech-grid');
+    if (techGrid) {
+        gridObserver.observe(techGrid);
+    }
+
 
     // Formulário
     const contactForm = document.querySelector('.contact-form');

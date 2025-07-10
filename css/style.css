@@ -180,6 +180,7 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    z-index: 2; /* Adicionei para garantir que fique acima das camadas */
 }
 
 .hexagon-center:before,
@@ -199,6 +200,38 @@ body {
 .hexagon-center:after {
     top: 100%;
     border-top: 17.32px solid var(--primary-color);
+}
+
+/* HEXAGON SIMPLES (loading) */
+.loading-screen .hexagon {
+    display: block;
+    /* mantém todos os outros estilos */
+}
+
+/* Esconde o hexagon simples fora do loading */
+.hexagon:not(.loading-screen .hexagon) {
+    display: none !important;
+}
+
+/* MEDIA QUERIES */
+@media (max-width: 768px) {
+    /* Mobile - esconde o hexagon-center */
+    .hexagon-center {
+        display: none;
+    }
+    
+    /* Ajustes para o tech-circle em mobile */
+    .tech-circle {
+        width: 250px;
+        height: 250px;
+    }
+}
+
+@media (min-width: 769px) {
+    /* Desktop - mostra o hexagon-center */
+    .hexagon-center {
+        display: block;
+    }
 }
 
 /* ============ HEADER ============ */
@@ -516,6 +549,7 @@ body {
     align-items: center;
 }
 
+/* Estilos para a animação do grid */
 .tech-grid {
     display: grid;
     grid-template-columns: repeat(3, 80px);
@@ -532,6 +566,15 @@ body {
 .grid-cell.active {
     background-color: var(--primary-color);
     box-shadow: 0 0 20px rgba(0, 102, 255, 0.5);
+    transform: scale(1.05);
+}
+
+/* Ajustes para mobile */
+@media (max-width: 768px) {
+    .tech-grid {
+        grid-template-columns: repeat(3, 60px);
+        grid-template-rows: repeat(3, 60px);
+    }
 }
 
 /* ============ CONTACT SECTION ============ */
