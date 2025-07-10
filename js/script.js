@@ -20,6 +20,18 @@ document.addEventListener('DOMContentLoaded', function() {
         header.classList.toggle('scrolled', window.scrollY > 50);
     });
 
+    // Força a rolagem para o topo ao recarregar a página
+    window.onbeforeunload = function() {
+        window.scrollTo(0, 0);
+    };
+
+    // Garante que a página comece no topo quando carregada
+    window.addEventListener('load', function() {
+        setTimeout(function() {
+            window.scrollTo(0, 0);
+        }, 0);
+    });
+
     // Mobile menu
     const toggleMenu = () => {
         mobileMenuBtn.classList.toggle('active');

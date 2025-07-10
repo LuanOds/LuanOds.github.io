@@ -32,6 +32,11 @@ body {
     margin: 0 auto;
 }
 
+/* Garante que o HTML e body não mantenham posição de rolagem */
+html, body {
+    scroll-behavior: auto !important;
+}
+
 /* ============ BOTÕES ============ */
 .btn {
     display: inline-block;
