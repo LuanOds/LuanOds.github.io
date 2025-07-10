@@ -155,3 +155,29 @@ document.addEventListener('DOMContentLoaded', function() {
     window.addEventListener('load', handleHexagonResize);
     window.addEventListener('resize', handleHexagonResize);
 });
+
+// Simulador de Demonstração
+const simulatorBtn = document.querySelector('.simulator-placeholder button');
+if (simulatorBtn) {
+    simulatorBtn.addEventListener('click', function() {
+        // Aqui você pode adicionar a lógica do simulador
+        alert('Simulador será implementado em breve!');
+        // Ou carregar um iframe/componente real
+    });
+}
+
+// Smooth scroll para links internos
+document.querySelectorAll('.app-hero a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        
+        if (targetElement) {
+            window.scrollTo({
+                top: targetElement.offsetTop - 80,
+                behavior: 'smooth'
+            });
+        }
+    });
+});

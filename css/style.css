@@ -928,3 +928,200 @@ html, body {
     transform: scale(0.95) !important;
     opacity: 0.9 !important;
 }
+
+/* ============ PÁGINA DE APLICATIVO ============ */
+
+.app-detail {
+    padding-top: 80px;
+}
+
+/* Hero Section Específica */
+.app-hero {
+    padding: 80px 0;
+    color: white;
+}
+
+.app-hero .container {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+}
+
+.app-hero-content {
+    flex: 1;
+}
+
+.app-hero-image {
+    flex: 1;
+    text-align: center;
+}
+
+.app-hero h1 {
+    font-size: 2.8rem;
+    margin-bottom: 20px;
+}
+
+.app-hero h1 i {
+    margin-right: 15px;
+}
+
+.app-badges {
+    margin: 25px 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.badge {
+    background: rgba(255,255,255,0.15);
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+}
+
+.badge i {
+    margin-right: 8px;
+}
+
+.app-screenshot {
+    max-width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+/* Seção de Recursos */
+.app-features {
+    padding: 80px 0;
+    background-color: rgba(10, 10, 26, 0.7);
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 50px;
+}
+
+.feature-card {
+    background-color: rgba(20, 20, 40, 0.6);
+    border-radius: 10px;
+    padding: 30px;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 102, 255, 0.2);
+}
+
+.feature-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    color: white;
+}
+
+/* Seção de Demonstração */
+.app-demo {
+    padding: 80px 0;
+}
+
+.demo-container {
+    display: flex;
+    gap: 50px;
+    margin-top: 40px;
+}
+
+.demo-description {
+    flex: 1;
+}
+
+.demo-embed {
+    flex: 1;
+}
+
+.demo-list {
+    margin-top: 20px;
+    list-style: none;
+}
+
+.demo-list li {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.demo-list i {
+    margin-right: 10px;
+    color: var(--secondary-color);
+}
+
+.simulator-placeholder {
+    background: rgba(20, 20, 40, 0.6);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.simulator-image {
+    max-width: 100%;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+/* Seção de Integrações */
+.app-integrations {
+    padding: 80px 0;
+    background-color: rgba(10, 10, 26, 0.7);
+}
+
+.integrations-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+    justify-items: center;
+}
+
+.integration {
+    text-align: center;
+}
+
+.integration-logo {
+    height: 60px;
+    width: auto;
+    margin-bottom: 15px;
+    filter: grayscale(100%) contrast(50%);
+    transition: all 0.3s ease;
+}
+
+.integration:hover .integration-logo {
+    filter: none;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .app-hero .container {
+        flex-direction: column;
+    }
+    
+    .demo-container {
+        flex-direction: column;
+    }
+    
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+}
