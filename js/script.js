@@ -128,10 +128,36 @@ document.addEventListener('DOMContentLoaded', function() {
     // Formulário
     const contactForm = document.querySelector('.contact-form');
     if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
+        contactForm.addEventListener('submit', async function(e) {
             e.preventDefault();
-            alert('Mensagem enviada com sucesso! Entrarei em contato em breve.');
-            this.reset();
+            
+            const submitButton = this.querySelector('button[type="submit"]');
+            submitButton.disabled = true;
+            submitButton.textContent = 'Enviando...';
+            
+            try {
+                const response = await fetch('https://formspree.io/f/xqabrnql', {
+                    method: 'POST',
+                    body: new URLSearchParams(new FormData(this)),
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+                
+                if (response.ok) {
+                    alert('Mensagem enviada com sucesso!');
+                    this.reset();
+                } else {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || 'Falha no envio');
+                }
+            } catch (error) {
+                alert('Erro ao enviar: ' + error.message);
+                console.error('Erro no formulário:', error);
+            } finally {
+                submitButton.disabled = false;
+                submitButton.textContent = 'Enviar Mensagem';
+            }
         });
     }
 
