@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pegue as Estrelas</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;}
+    body {
+      background: linear-gradient(135deg, #1a2a6c 0%, #2c3e99 100%);
+      color: white;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+    .header {text-align:center;margin-bottom:20px;}
+    .header h3 {font-size:2rem;margin-bottom:10px;}
+    .header p {font-size:1rem;color:#e0e6ff;}
+    .game-wrapper {max-width:900px;width:100%;background:rgba(255,255,255,0.08);border-radius:12px;padding:20px;box-shadow:0 6px 20px rgba(0,0,0,0.4);}
+    canvas {width:100%;height:600px;background:linear-gradient(180deg,#07121f 0%, #0b2740 100%);border-radius:8px;display:block;margin-bottom:20px;}
+    .info {display:flex;justify-content:space-between;margin-bottom:20px;background:rgba(255,255,255,0.1);padding:10px 15px;border-radius:10px;}
+    .buttons {display:flex;gap:15px;justify-content:center;}
+    button {background:#00ffcc;color:#1a2a6c;border:none;padding:12px 20px;border-radius:5px;font-weight:bold;cursor:pointer;transition:all 0.3s;display:flex;align-items:center;}
+    button i {margin-right:8px;}
+    button:hover {background:#00e6b8;transform:translateY(-2px);}
+    @media(max-width:600px){canvas{height:400px;}.buttons{flex-direction:column;width:100%;}button{width:100%;justify-content:center;}}
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h3>Pegue as Estrelas</h3>
+    <p>Teste sua sorte no nosso desafio de adivinhação. Será que você consegue descobrir o número secreto?</p>
+  </div>
+
+  <div class="game-wrapper">
+    <canvas id="game" width="800" height="600"></canvas>
+
+    <div class="info">
+      <div>Pontuação: <span id="score">0</span></div>
+      <div>Vidas: <span id="lives">3</span></div>
+      <div>Nível: <span id="level">1</span></div>
+    </div>
+
+    <div class="buttons">
+      <button id="startBtn"><i class="fas fa-play"></i> Começar / Reiniciar</button>
+      <button id="backBtn"><i class="fas fa-arrow-left"></i> Voltar</button>
+    </div>
+  </div>
+
+  <script>
+    // Botão de voltar
+    document.getElementById('backBtn').addEventListener('click', ()=>{
+      window.location.href = '../landing.html';
+    });
+
+    // Jogo: Pegue as Estrelas
+    const canvas = document.getElementById('game');
+    const ctx = canvas.getContext('2d');
+    const scoreEl = document.getElementById('score');
+    const livesEl = document.getElementById('lives');
+    const levelEl = document.getElementById('level');
+    const startBtn = document.getElementById('startBtn');
+
+    const W = canvas.width;
+    const H = canvas.height;
+
+    let game = null;
+
+    function rand(min, max){return Math.random()*(max-min)+min}
+
+    class Paddle{
+      constructor(){this.w=140;this.h=18;this.x=(W-this.w)/2;this.y=H-50;this.speed=8;this.color='#ffd34d';}
+      draw(){ctx.fillStyle=this.color;roundRect(ctx,this.x,this.y,this.w,this.h,8,true,false);}
+      moveTo(x){this.x=Math.max(6,Math.min(W-this.w-6,x-this.w/2));}
+    }
+
+    class Star{
+      constructor(speed){this.r=rand(8,16);this.x=rand(this.r,W-this.r);this.y=-this.r-rand(0,200);this.speed=speed||rand(1.2,2.6);this.color=['#ffd34d','#ffffff','#8fe3ff'][Math.floor(rand(0,3))];}
+      update(dt){this.y+=this.speed*dt;}
+      draw(){ctx.beginPath();ctx.fillStyle=this.color;ctx.arc(this.x,this.y,this.r,0,Math.PI*2);ctx.fill();}
+      offScreen(){return this.y-this.r>H;}
+    }
+
+    function roundRect(ctx,x,y,w,h,r,fill,stroke){if(typeof r==='undefined')r=5;ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();if(fill)ctx.fill();if(stroke)ctx.stroke();}
+
+    class Game{
+      constructor(){this.paddle=new Paddle();this.stars=[];this.score=0;this.lives=3;this.level=1;this.spawnInterval=0.9;this.running=false;this.last=null;this.speedMultiplier=1;}
+      start(){this.reset();this.running=true;this.last=performance.now();requestAnimationFrame(this.loop.bind(this));}
+      reset(){this.stars=[];this.score=0;this.lives=3;this.level=1;this.spawnInterval=0.9;this.speedMultiplier=1;updateUI(this);}
+      loop(ts){if(!this.running)return;const dt=Math.min(60,ts-this.last)/16.6667;this.last=ts;this.update(dt);this.draw();if(this.lives<=0){this.running=false;this.showGameOver();return;}requestAnimationFrame(this.loop.bind(this));}
+      update(dt){if(!this._acc)this._acc=0;this._acc+=(dt*16.6667)/1000;if(this._acc>=this.spawnInterval){this._acc=0;this.stars.push(new Star(rand(1.4,2.6)*this.speedMultiplier));}
+        for(let s of this.stars)s.update(dt*1.6);
+        for(let i=this.stars.length-1;i>=0;i--){const s=this.stars[i];if(s.y+s.r>=this.paddle.y&&s.y-s.r<=this.paddle.y+this.paddle.h){if(s.x>=this.paddle.x&&s.x<=this.paddle.x+this.paddle.w){this.score+=1;this.stars.splice(i,1);updateUI(this);if(this.score%10===0){this.level+=1;this.speedMultiplier+=0.18;this.spawnInterval=Math.max(0.28,this.spawnInterval-0.08);updateUI(this);}continue;}}
+          if(s.offScreen()){this.stars.splice(i,1);this.lives-=1;updateUI(this);}}}
+      draw(){ctx.clearRect(0,0,W,H);for(let i=0;i<40;i++){ctx.fillStyle='rgba(255,255,255,'+(i%7===0?0.06:0.02)+')';ctx.fillRect((i*73)%W,(i*47)%H,1,1);}for(let s of this.stars)s.draw();this.paddle.draw();ctx.font='16px system-ui';ctx.fillStyle='#cfe3ff';ctx.fillText('Pegue as Estrelas!',14,22);}
+      showGameOver(){ctx.fillStyle='rgba(2,6,23,0.6)';ctx.fillRect(0,0,W,H);ctx.fillStyle='#fff';ctx.textAlign='center';ctx.font='36px system-ui';ctx.fillText('Game Over',W/2,H/2-20);ctx.font='18px system-ui';ctx.fillText('Pontuação: '+this.score,W/2,H/2+12);ctx.textAlign='start';}
+    }
+
+    function updateUI(g){scoreEl.textContent=g.score;livesEl.textContent=g.lives;levelEl.textContent=g.level;}
+
+    // input
+    let dragging=false;
+    canvas.addEventListener('mousemove',e=>{const rect=canvas.getBoundingClientRect();const x=(e.clientX-rect.left)*(canvas.width/rect.width);if(!dragging)return;if(game)game.paddle.moveTo(x);});
+    canvas.addEventListener('mousedown',e=>{dragging=true;const rect=canvas.getBoundingClientRect();const x=(e.clientX-rect.left)*(canvas.width/rect.width);if(game)game.paddle.moveTo(x);});
+    window.addEventListener('mouseup',()=>dragging=false);
+
+    canvas.addEventListener('touchstart',e=>{e.preventDefault();dragging=true;const rect=canvas.getBoundingClientRect();const x=(e.touches[0].clientX-rect.left)*(canvas.width/rect.width);if(game)game.paddle.moveTo(x);});
+    canvas.addEventListener('touchmove',e=>{e.preventDefault();const rect=canvas.getBoundingClientRect();const x=(e.touches[0].clientX-rect.left)*(canvas.width/rect.width);if(game)game.paddle.moveTo(x);});
+    canvas.addEventListener('touchend',()=>dragging=false);
+
+    const keys={};
+    window.addEventListener('keydown',e=>{keys[e.key]=true;});
+    window.addEventListener('keyup',e=>{keys[e.key]=false;});
+    function keyboardLoop(){if(game&&game.running){if(keys['ArrowLeft'])game.paddle.x-=game.paddle.speed;if(keys['ArrowRight'])game.paddle.x+=game.paddle.speed;game.paddle.x=Math.max(6,Math.min(W-game.paddle.w-6,game.paddle.x));}requestAnimationFrame(keyboardLoop);}requestAnimationFrame(keyboardLoop);
+
+    startBtn.addEventListener('click',()=>{if(!game)game=new Game();game.start();});
+
+    game=new Game();for(let i=0;i<6;i++)game.stars.push(new Star(1+i*0.2));game.draw();
+  </script>
+</body>
+</html>

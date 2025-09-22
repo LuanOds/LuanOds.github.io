@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Principal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style_landing.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fas fa-lock"></i>
+            <span>Sistema de Autenticação</span>
+        </div>
+        <div class="nav-links">
+            <div class="user-info">
+                <span id="userName">Usuário</span>
+            </div>
+            <!-- Botão de admin inicialmente escondido via classe -->
+            <a href="/admin" class="admin-btn hidden" id="adminButton">
+                <i class="fas fa-cog"></i> Administração
+            </a>
+            <button class="logout-btn" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i> Sair
+            </button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="welcome-section">
+            <h1 id="welcomeTitle">Bem-vindo ao Sistema</h1>
+            <p>Esta é a sua área personalizada com todas as ferramentas necessárias para gerenciar suas atividades.</p>
+        </div>
+
+        <!-- Seção de recursos -->
+        <div class="features">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3>Segurança</h3>
+                <p>Sistema protegido com autenticação de usuários e criptografia de dados.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-tachometer-alt"></i>
+                </div>
+                <h3>Desempenho</h3>
+                <p>Plataforma otimizada para oferecer a melhor experiência de uso.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h3>Gestão de Usuários</h3>
+                <p>Controle completo sobre os usuários do sistema (apenas administradores).</p>
+            </div>
+        </div>
+
+        <!-- Seção de jogos -->
+        <div class="games-section">
+            <h2>Nossos Jogos</h2>
+            <div class="games-container">
+                <div class="game-card">
+                    <div class="game-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>Jogo da Memória</h3>
+                    <p>Relaxe com nosso jogo de memória divertido e desafie suas habilidades!</p>
+                    <a href="games/memory-game.html" class="game-btn">
+                        <i class="fas fa-play"></i> Jogar Agora
+                    </a>
+                </div>
+                <div class="game-card">
+                    <div class="game-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h3>Pegue as Estrelas</h3>
+                    <p>Movimente a plataforma e pegue o maior número possível de estrelas que caem do céu.</p>
+                    <a href="games/pegue-as-estrelas.html" class="game-btn">
+                        <i class="fas fa-play"></i> Jogar Agora
+                    </a>
+                </div>
+                <div class="game-card">
+                    <div class="game-icon">
+                        <i class="fas fa-gamepad"></i>
+                    </div>
+                    <h3>Novo Jogo em Breve</h3>
+                    <p>Estamos preparando uma nova diversão para você. Fique ligado!</p>
+                    <a href="#" class="game-btn disabled">
+                        <i class="fas fa-clock"></i> Em Breve
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Seção de downloads -->
+        <div class="downloads-section">
+            <h2>Arquivos para Download</h2>
+            <div class="downloads-container">
+                <div class="download-card">
+                    <div class="download-icon">
+                        <img src="/assets/DocRenamer.ico" alt="Ícone DocRenamer">
+                    </div>
+                    <h3>DocRenamer</h3>
+                    <p>Renomeie documentos específicos de forma prática e rápida. Ideal para organizar arquivos dentro da empresa.</p>
+                    <div class="download-info">
+                        <span><i class="fas fa-archive"></i> Formato: ZIP</span>
+                        <span><i class="fas fa-weight-hanging"></i> Tamanho: 74.10 MB</span>
+                        <span><i class="fas fa-calendar-alt"></i> Atualizado: 21/09/2025</span>
+                    </div>
+                    <a href="/downloads/DocRenamer_Installer.zip" class="download-btn" download>
+                        <i class="fas fa-download"></i> Baixar
+                    </a>
+                </div>
+                <div class="download-card">
+                    <div class="download-icon">
+                        <img src="/assets/AutoDocGenerator_icone.ico" alt="Ícone AutoDocGenerator">
+                    </div>
+                    <h3>AutoDocGenerator</h3>
+                    <p>Aplicativo que automatiza a geração de documentos e contratos, preenchendo automaticamente os dados de cada cliente em múltiplos modelos.</p>
+                    <div class="download-info">
+                        <span><i class="fas fa-archive"></i> Formato: ZIP</span>
+                        <span><i class="fas fa-weight-hanging"></i> Tamanho: 35.35 MB</span>
+                        <span><i class="fas fa-calendar-alt"></i> Atualizado: 21/09/2025</span>
+                    </div>
+                    <a href="/downloads/AutoDocGenerator_Installer.zip" class="download-btn">
+                        <i class="fas fa-download"></i> Baixar
+                    </a>
+                </div>
+                <div class="download-card">
+                    <div class="download-icon">
+                        <i class="fas fa-images"></i>
+                    </div>
+                    <h3>Em breve!</h3>
+                    <p>Novos arquivos serão adicionados em breve.</p>
+                    <div class="download-info">
+                        <span><i class="fas fa-archive"></i> Formato: ZIP</span>
+                        <span><i class="fas fa-weight-hanging"></i> Tamanho: 0.0 MB</span>
+                        <span><i class="fas fa-calendar-alt"></i> Atualizado: --/--/----</span>
+                    </div>
+                    <a href="#" class="download-btn disabled">
+                        <i class="fas fa-clock"></i> Em Breve
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2025 Criado por Luan Oliveira dos Santos. Todos os direitos reservados.</p>
+    </footer>
+
+    <div id="message" class="message"></div>
+    <script src="js/landing.js"></script>
+</body>
+</html>

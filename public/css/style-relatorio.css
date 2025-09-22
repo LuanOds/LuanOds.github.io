@@ -1,0 +1,80 @@
+/* Estilo geral */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #0b1a2f;
+  color: #e0e0e0;
+}
+
+header {
+  background-color: #0d203f;
+  padding: 20px;
+  text-align: center;
+}
+
+.logo {
+  font-size: 2rem;
+  color: #9cc4ff;
+}
+
+.logo span {
+  color: #ffffff;
+}
+
+/* Container principal */
+.container {
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: #152a4a;
+  border-radius: 10px;
+  box-shadow: 0 0 10px #00000066;
+}
+
+.form-section h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #9cc4ff;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  background-color: #1e3a5f;
+  color: white;
+}
+
+.btn-primary {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  background-color: #3477eb;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn-primary:hover {
+  background-color: #255db8;
+}
+
+footer {
+  text-align: center;
+  padding: 20px;
+  color: #777;
+}

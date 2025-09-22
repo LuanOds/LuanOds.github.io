@@ -1,0 +1,253 @@
+/* Estilo para o campo de senha com olhinho */
+.password-container {
+    position: relative;
+}
+
+.password-container input {
+    padding-right: 45px;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.5);
+    background: none;
+    border: none;
+    font-size: 1.1rem;
+    transition: color 0.3s ease;
+}
+
+.toggle-password:hover {
+    color: var(--secondary-color);
+}
+
+/* ============ PÁGINA DE LOGIN ============ */
+.login-page {
+    background: linear-gradient(135deg, var(--dark-color) 0%, #1a2a6c 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.login-container {
+    width: 100%;
+    max-width: 90%;
+    border-radius: 2%;
+    margin: 0 auto;
+}
+
+.login-box {
+    background-color: rgba(20, 20, 40, 0.8);
+    border-radius: 12px;
+    padding: 40px 30px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    animation: fadeIn 0.5s ease;
+}
+
+.login-logo {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 2.5rem;
+}
+
+.login-content h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: var(--text-color);
+    font-size: 1.8rem;
+}
+
+.login-content .form-group {
+    margin-bottom: 20px;
+}
+
+.login-content label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+.login-content label i {
+    margin-right: 10px;
+    color: var(--secondary-color);
+}
+
+.login-content input {
+    width: 100%;
+    padding: 15px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    color: var(--text-color);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.login-content input:focus {
+    outline: none;
+    border-color: var(--secondary-color);
+    background-color: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 0 10px rgba(0, 255, 204, 0.2);
+}
+
+.login-content input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+    color: var(--text-color);
+}
+
+.remember-me input {
+    width: auto;
+    margin-right: 8px;
+}
+
+.forgot-password {
+    color: var(--secondary-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.forgot-password:hover {
+    color: var(--primary-color);
+}
+
+.btn-block {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.login-footer {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.copyright {
+    margin-top: 20px;
+    color: var(--text-color);
+    opacity: 0.7;
+    font-size: 0.9rem;
+}
+
+.message {
+    padding: 15px;
+    border-radius: 5px;
+    margin: 20px 0;
+    text-align: center;
+    font-weight: 500;
+    display: none;
+}
+
+.message.error {
+    background-color: rgba(255, 51, 102, 0.2);
+    border: 1px solid rgba(255, 51, 102, 0.3);
+    color: var(--accent-color);
+}
+
+.message.success {
+    background-color: rgba(0, 255, 204, 0.2);
+    border: 1px solid rgba(0, 255, 204, 0.3);
+    color: var(--secondary-color);
+}
+
+/* Botões dentro da mensagem */
+.message button {
+    margin: 5px;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.message button:first-of-type {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.message button:last-of-type {
+    background-color: var(--secondary-color);
+    color: var(--dark-color);
+}
+
+/* Animação de entrada */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsividade */
+@media (max-width: 576px) {
+    .login-box {
+        padding: 30px 20px;
+    }
+    
+    .login-content h2 {
+        font-size: 1.5rem;
+    }
+    
+    .form-options {
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start;
+    }
+}
+
+/* Animações para o alerta personalizado */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+    from { transform: scale(0.9); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+/* Estilo para o botão do alerta */
+#alert-ok-btn {
+    background-color: #00ffcc;
+    color: #121212;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+#alert-ok-btn:hover {
+    background-color: #00e6b8;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 230, 184, 0.4);
+}
+
+#alert-ok-btn:active {
+    transform: translateY(0);
+}

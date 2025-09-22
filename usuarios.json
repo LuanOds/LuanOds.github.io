@@ -1,0 +1,32 @@
+[
+  {
+    "usuario": "EDUARDO",
+    "senha": "Temp@ea82",
+    "ativo": true,
+    "admin": false
+  },
+  {
+    "usuario": "KETLYN",
+    "senha": "Temp@ea82",
+    "ativo": true,
+    "admin": false
+  },
+  {
+    "usuario": "CLARA",
+    "senha": "123456",
+    "ativo": true,
+    "admin": true
+  },
+  {
+    "usuario": "LUAN",
+    "senha": "22huna7q",
+    "ativo": true,
+    "admin": true
+  },
+  {
+    "usuario": "THEO",
+    "senha": "123",
+    "ativo": true,
+    "admin": false
+  }
+]

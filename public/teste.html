@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel de Administração</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fb;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1a2a6c 0%, #2c3e99 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .header-top {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* Ajustes para os botões no header */
+        .header-buttons {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .back-btn, .logout-btn {
+            padding: 8px 15px;
+            font-size: 14px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s;
+            text-decoration: none;
+            border: none;
+        }
+
+        .back-btn {
+            background: #6c757d;
+            color: white;
+        }
+
+        .back-btn:hover {
+            background: #5a6268;
+        }
+
+        .logout-btn {
+            background: #00ffcc;
+            color: #1a2a6c;
+        }
+
+        .logout-btn:hover {
+            background: #00e6b8;
+        }
+
+        .dashboard {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .main-content {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            order: 1;
+        }
+
+        .section-title {
+            font-size: 20px;
+            color: #1a2a6c;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title i {
+            margin-right: 10px;
+            color: #1a2a6c;
+        }
+
+        .actions {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            background: #f5f7fb;
+            padding: 10px;
+            border-radius: 5px;
+            width: 100%;
+        }
+
+        .search-box i {
+            margin-right: 10px;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .search-box input {
+            border: none;
+            background: transparent;
+            outline: none;
+            width: 100%;
+            font-size: 14px;
+        }
+
+        .add-user-btn {
+            background: #1a2a6c;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            width: 100%;
+        }
+
+        .add-user-btn i {
+            margin-right: 8px;
+        }
+
+        .add-user-btn:hover {
+            background: #2c3e99;
+        }
+
+        /* MELHORIAS PARA TABELA EM MOBILE */
+        .table-container {
+            overflow-x: auto;
+            margin-top: 15px;
+            position: relative;
+        }
+
+        .swipe-hint {
+            display: none;
+            position: sticky;
+            left: 0;
+            padding: 8px 12px;
+            background-color: #f8f9fa;
+            color: #6c757d;
+            font-size: 12px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            animation: pulse 2s infinite;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.6; }
+            50% { opacity: 1; }
+            100% { opacity: 0.6; }
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 600px;
+        }
+
+        th, td {
+            padding: 12px 10px;
+            text-align: left;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 14px;
+        }
+
+        th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+            color: #495057;
+            position: sticky;
+            top: 0;
+        }
+
+        tr {
+            position: relative;
+        }
+
+        tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .status-active {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .status-inactive {
+            background: #ffebee;
+            color: #d32f2f;
+        }
+
+        .admin-tag {
+            background: #fff3cd;
+            color: #856404;
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-size: 10px;
+            margin-left: 5px;
+        }
+
+        .current-user-tag {
+            background: #d1ecf1;
+            color: #0c5460;
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-size: 10px;
+            margin-left: 5px;
+        }
+
+        .password-field {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .password-text {
+            font-family: monospace;
+            font-size: 13px;
+        }
+
+        .toggle-password {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #6c757d;
+            font-size: 13px;
+            padding: 0;
+            margin: 0;
+        }
+
+        .toggle-password:hover {
+            color: #495057;
+        }
+
+        /* NOVO DESIGN PARA AÇÕES EM MOBILE */
+        .actions-cell {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
+
+        .mobile-actions-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: #6c757d;
+            font-size: 16px;
+            cursor: pointer;
+            padding: 5px;
+            margin-left: auto;
+        }
+
+        .mobile-actions-menu {
+            display: none;
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: white;
+            border-radius: 6px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            z-index: 10;
+            padding: 8px;
+            min-width: 140px;
+        }
+
+        .mobile-actions-menu button {
+            display: block;
+            width: 100%;
+            text-align: left;
+            padding: 8px 12px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-size: 14px;
+            border-radius: 4px;
+            margin-bottom: 4px;
+        }
+
+        .mobile-actions-menu button:last-child {
+            margin-bottom: 0;
+        }
+
+        .mobile-actions-menu button:hover {
+            background: #f5f7fb;
+        }
+
+        .action-btn {
+            padding: 5px 8px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            transition: all 0.2s;
+        }
+
+        .action-btn i {
+            margin-right: 4px;
+        }
+
+        .edit-btn {
+            background: #ffc107;
+            color: #212529;
+        }
+
+        .edit-btn:hover {
+            background: #e0a800;
+        }
+
+        .edit-btn:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+        }
+
+        .delete-btn {
+            background: #dc3545;
+            color: white;
+        }
+
+        .delete-btn:hover {
+            background: #c82333;
+        }
+
+        .delete-btn:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+        }
+
+        .toggle-btn {
+            background: #17a2b8;
+            color: white;
+        }
+
+        .toggle-btn:hover {
+            background: #138496;
+        }
+
+        .toggle-btn:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 15px;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .modal-header h2 {
+            color: #1a2a6c;
+            font-size: 20px;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 500;
+            color: #495057;
+            font-size: 14px;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 15px;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            border-color: #1a2a6c;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(26, 42, 108, 0.2);
+        }
+
+        .password-input-container {
+            position: relative;
+        }
+
+        .password-input-container input {
+            padding-right: 40px;
+        }
+
+        .toggle-password-modal {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #6c757d;
+            font-size: 14px;
+            padding: 5px;
+        }
+
+        .toggle-password-modal:hover {
+            color: #495057;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .cancel-btn, .save-btn {
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            border: none;
+            font-size: 14px;
+        }
+
+        .cancel-btn {
+            background: #6c757d;
+            color: white;
+        }
+
+        .save-btn {
+            background: #1a2a6c;
+            color: white;
+        }
+
+        /* Melhorias para dispositivos móveis */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            header {
+                padding: 12px;
+                margin-bottom: 15px;
+            }
+            
+            h1 {
+                font-size: 20px;
+            }
+            
+            .header-top {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .header-buttons {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .back-btn, .logout-btn {
+                flex: 1;
+                text-align: center;
+                justify-content: center;
+                min-height: 44px;
+            }
+            
+            .main-content {
+                padding: 15px;
+            }
+            
+            .section-title {
+                font-size: 18px;
+            }
+            
+            th, td {
+                padding: 10px 8px;
+                font-size: 13px;
+            }
+            
+            /* Mostrar dica de deslize apenas em mobile */
+            .swipe-hint {
+                display: flex;
+                align-items: center;
+            }
+            
+            .swipe-hint i {
+                margin-right: 8px;
+                animation: swipe 1.5s infinite alternate;
+            }
+            
+            @keyframes swipe {
+                0% { transform: translateX(0); }
+                100% { transform: translateX(10px); }
+            }
+            
+            /* Esconder botões de ação padrão em mobile */
+            .actions-cell .action-btn:not(.mobile-actions-toggle) {
+                display: none;
+            }
+            
+            /* Mostrar botão de menu para ações em mobile */
+            .mobile-actions-toggle {
+                display: block;
+            }
+            
+            /* Ajustar tabela para melhor visualização em mobile */
+            table {
+                min-width: 100%;
+            }
+            
+            .action-btn {
+                padding: 8px 10px;
+                font-size: 13px;
+                min-height: 44px;
+                min-width: 44px;
+            }
+            
+            .modal-content {
+                padding: 15px;
+            }
+            
+            .form-group input, .form-group select {
+                padding: 12px;
+                font-size: 16px; /* Prevenir zoom no iOS */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-buttons {
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            .back-btn, .logout-btn {
+                width: 100%;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+            }
+            
+            .cancel-btn, .save-btn {
+                width: 100%;
+                min-height: 44px;
+            }
+        }
+
+        /* Melhorias de acessibilidade para mobile */
+        @media (max-width: 768px) and (orientation: landscape) {
+            .modal-content {
+                max-height: 80vh;
+            }
+        }
+
+        /* Ajustes para toque em dispositivos móveis */
+        @media (hover: none) {
+            .back-btn:hover, .logout-btn:hover, 
+            .add-user-btn:hover, .action-btn:hover {
+                transform: none;
+            }
+            
+            .back-btn:hover {
+                background: #6c757d;
+            }
+            
+            .logout-btn:hover {
+                background: #00ffcc;
+            }
+            
+            .add-user-btn:hover {
+                background: #1a2a6c;
+            }
+        }
+
+        /* Prevenir zoom em inputs no iOS */
+        @media screen and (max-width: 768px) {
+            input, select, textarea {
+                font-size: 16px;
+            }
+        }
+
+        /* Melhorias de usabilidade para formulários em mobile */
+        button, .action-btn, .back-btn, .logout-btn {
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <div class="header-top">
+                    <h1>Gerenciar Usuários</h1>
+                    <div class="header-buttons">
+                        <button class="back-btn" onclick="history.back()">
+                            <i class="fas fa-arrow-left"></i> Voltar
+                        </button>
+                        <button class="logout-btn" onclick="logout()">
+                            <i class="fas fa-sign-out-alt"></i> Sair
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="dashboard">
+            <div class="main-content">
+                <div class="section-title">
+                    <i class="fas fa-users"></i> Lista de Usuários
+                </div>
+                
+                <div class="actions">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Buscar usuários..." id="searchInput">
+                    </div>
+                    <button class="add-user-btn" onclick="openModal()">
+                        <i class="fas fa-plus"></i> Adicionar Usuário
+                    </button>
+                </div>
+
+                <div class="swipe-hint">
+                    <i class="fas fa-arrow-right"></i> Deslize para ver mais opções
+                </div>
+
+                <div class="table-container">
+                    <table id="usersTable">
+                        <thead>
+                            <tr>
+                                <th>Usuário</th>
+                                <th>Senha</th>
+                                <th>Status</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>EDUARDO</td>
+                                <td class="password-field">
+                                    <span class="password-text">••••••••</span>
+                                    <button class="toggle-password" onclick="togglePassword(this)">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </td>
+                                <td><span class="status status-active">Ativo</span></td>
+                                <td class="actions-cell">
+                                    <button class="action-btn edit-btn" onclick="editUser(0)">
+                                        <i class="fas fa-edit"></i> Editar
+                                    </button>
+                                    <button class="action-btn toggle-btn" onclick="toggleUserStatus(0)">
+                                        <i class="fas fa-ban"></i> Desativar
+                                    </button>
+                                    <button class="action-btn delete-btn" onclick="deleteUser(0)">
+                                        <i class="fas fa-trash"></i> Excluir
+                                    </button>
+                                    <button class="mobile-actions-toggle" onclick="toggleMobileActions(this)">
+                                        <i class="fas fa-ellipsis-v"></i>
+                                    </button>
+                                    <div class="mobile-actions-menu">
+                                        <button onclick="editUser(0)"><i class="fas fa-edit"></i> Editar</button>
+                                        <button onclick="toggleUserStatus(0)"><i class="fas fa-ban"></i> Desativar</button>
+                                        <button onclick="deleteUser(0)"><i class="fas fa-trash"></i> Excluir</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>KETLYN</td>
+                                <td class="password-field">
+                                    <span class="password-text">••••••••</span>
+                                    <button class="toggle-password" onclick="togglePassword(this)">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </td>
+                                <td><span class="status status-inactive">Inativo</span></td>
+                                <td class="actions-cell">
+                                    <button class="action-btn edit-btn" onclick="editUser(1)">
+                                        <i class="fas fa-edit"></i> Editar
+                                    </button>
+                                    <button class="action-btn toggle-btn" onclick="toggleUserStatus(1)">
+                                        <i class="fas fa-check"></i> Ativar
+                                    </button>
+                                    <button class="action-btn delete-btn" onclick="deleteUser(1)">
+                                        <i class="fas fa-trash"></i> Excluir
+                                    </button>
+                                    <button class="mobile-actions-toggle" onclick="toggleMobileActions(this)">
+                                        <i class="fas fa-ellipsis-v"></i>
+                                    </button>
+                                    <div class="mobile-actions-menu">
+                                        <button onclick="editUser(1)"><i class="fas fa-edit"></i> Editar</button>
+                                        <button onclick="toggleUserStatus(1)"><i class="fas fa-check"></i> Ativar</button>
+                                        <button onclick="deleteUser(1)"><i class="fas fa-trash"></i> Excluir</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para adicionar/editar usuário -->
+    <div class="modal" id="userModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Adicionar Usuário</h2>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <form id="userForm">
+                <input type="hidden" id="editIndex">
+                <div class="form-group">
+                    <label for="username">Usuário</label>
+                    <input type="text" id="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Senha</label>
+                    <div class="password-input-container">
+                        <input type="password" id="password" required>
+                        <button type="button" class="toggle-password-modal" onclick="togglePasswordVisibilityModal('password')">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="activeStatus">Status</label>
+                    <select id="activeStatus" class="form-control">
+                        <option value="true">Ativo</option>
+                        <option value="false">Inativo</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="adminStatus">Tipo de Usuário</label>
+                    <select id="adminStatus" class="form-control">
+                        <option value="false">Usuário Normal</option>
+                        <option value="true">Administrador</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="cancel-btn" onclick="closeModal()">Cancelar</button>
+                    <button type="submit" class="save-btn">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Função para mostrar/ocultar o menu de ações no mobile
+        function toggleMobileActions(button) {
+            const menu = button.nextElementSibling;
+            const allMenus = document.querySelectorAll('.mobile-actions-menu');
+            
+            // Fechar outros menus abertos
+            allMenus.forEach(m => {
+                if (m !== menu && m.style.display === 'block') {
+                    m.style.display = 'none';
+                }
+            });
+            
+            // Alternar o menu atual
+            if (menu.style.display === 'block') {
+                menu.style.display = 'none';
+            } else {
+                menu.style.display = 'block';
+            }
+            
+            // Prevenir a propagação do evento para não fechar imediatamente
+            event.stopPropagation();
+        }
+        
+        // Fechar menus ao clicar em qualquer lugar da página
+        document.addEventListener('click', function() {
+            document.querySelectorAll('.mobile-actions-menu').forEach(menu => {
+                menu.style.display = 'none';
+            });
+        });
+        
+        // Prevenir que cliques nos menus fechem imediatamente
+        document.querySelectorAll('.mobile-actions-menu').forEach(menu => {
+            menu.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+        });
+        
+        // Funções existentes (simuladas para demonstração)
+        function togglePassword(button) {
+            const passwordField = button.previousElementSibling;
+            if (passwordField.textContent === '••••••••') {
+                passwordField.textContent = 'senha123';
+                button.innerHTML = '<i class="fas fa-eye-slash"></i>';
+            } else {
+                passwordField.textContent = '••••••••';
+                button.innerHTML = '<i class="fas fa-eye"></i>';
+            }
+        }
+        
+        function togglePasswordVisibilityModal(fieldId) {
+            const passwordField = document.getElementById(fieldId);
+            const toggleButton = passwordField.nextElementSibling;
+            
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                toggleButton.innerHTML = '<i class="fas fa-eye-slash"></i>';
+            } else {
+                passwordField.type = 'password';
+                toggleButton.innerHTML = '<i class="fas fa-eye"></i>';
+            }
+        }
+        
+        function openModal() {
+            document.getElementById('userModal').style.display = 'flex';
+        }
+        
+        function closeModal() {
+            document.getElementById('userModal').style.display = 'none';
+        }
+        
+        function editUser(index) {
+            document.getElementById('modalTitle').textContent = 'Editar Usuário';
+            document.getElementById('editIndex').value = index;
+            openModal();
+        }
+        
+        function toggleUserStatus(index) {
+            alert('Alternar status do usuário ' + index);
+        }
+        
+        function deleteUser(index) {
+            if (confirm('Tem certeza que deseja excluir este usuário?')) {
+                alert('Usuário ' + index + ' excluído');
+            }
+        }
+        
+        function logout() {
+            alert('Função de logout');
+        }
+        
+        // Fechar modal ao clicar fora dele
+        window.onclick = function(event) {
+            const modal = document.getElementById('userModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        };
+        
+        // Busca de usuários
+        document.getElementById('searchInput').addEventListener('input', function() {
+            const searchText = this.value.toLowerCase();
+            const rows = document.querySelectorAll('#usersTable tbody tr');
+            
+            rows.forEach(row => {
+                const username = row.cells[0].textContent.toLowerCase();
+                if (username.includes(searchText)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

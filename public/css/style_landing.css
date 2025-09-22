@@ -1,0 +1,729 @@
+        /* Estilos existentes (mantidos) */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fb;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .navbar {
+            background: linear-gradient(135deg, #1a2a6c 0%, #2c3e99 100%);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            color: #00ffcc;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            margin-right: 10px;
+        }
+
+        .admin-btn {
+            background: #00ffcc;
+            color: #1a2a6c;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .admin-btn i {
+            margin-right: 5px;
+        }
+
+        .admin-btn:hover {
+            background: #00e6b8;
+            transform: translateY(-2px);
+        }
+
+        .logout-btn {
+            background: transparent;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 15px;
+        }
+
+        .welcome-section {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .welcome-section h1 {
+            font-size: 28px;
+            color: #1a2a6c;
+            margin-bottom: 15px;
+        }
+
+        .welcome-section p {
+            font-size: 16px;
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* ===== ESTILOS PARA FEATURES ===== */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+            align-items: stretch;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            transition: transform 0.3s;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 35px;
+            color: #1a2a6c;
+            margin-bottom: 15px;
+        }
+
+        .feature-card h3 {
+            font-size: 18px;
+            margin-bottom: 12px;
+            color: #1a2a6c;
+        }
+
+        .feature-card p {
+            color: #666;
+            font-size: 14px;
+            flex-grow: 1;
+        }
+
+        /* ===== SEÇÃO DE JOGOS ===== */
+        .games-section {
+            margin-bottom: 40px;
+        }
+
+        .games-section h2 {
+            font-size: 24px;
+            color: #1a2a6c;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .games-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .game-card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            transition: transform 0.3s;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .game-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .game-icon {
+            font-size: 24px; /* Reduzido de 35px para 24px */
+            color: #1a2a6c;
+            margin-bottom: 15px;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background-color: #f0f4ff;
+            margin: 0 auto 15px;
+        }
+
+        .game-card h3 {
+            font-size: 18px;
+            margin-bottom: 12px;
+            color: #1a2a6c;
+        }
+
+        .game-card p {
+            color: #666;
+            font-size: 14px;
+            flex-grow: 1;
+        }
+
+        /* Estilo para o botão do jogo */
+        .game-btn {
+            background: #00ffcc;
+            color: #1a2a6c;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            display: inline-block;
+            margin-top: 15px;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 14px;
+            text-align: center;
+            align-self: center;
+            min-width: 140px;
+        }
+
+        .game-btn i {
+            margin-right: 5px;
+        }
+
+        .game-btn:hover {
+            background: #00e6b8;
+            transform: translateY(-2px);
+        }
+
+        /* ===== NOVA SEÇÃO DE DOWNLOADS ===== */
+        .downloads-section {
+            margin-bottom: 40px;
+        }
+
+        .downloads-section h2 {
+            font-size: 24px;
+            color: #1a2a6c;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .downloads-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .download-card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            transition: transform 0.3s;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .download-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .download-icon {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+        }
+
+        .download-icon img {
+            width: 48px;
+            height: 48px;
+            object-fit: contain;
+        }
+
+        .download-icon i {
+            font-size: 35px;
+            color: #1a2a6c;
+        }
+
+        .download-card h3 {
+            font-size: 18px;
+            margin-bottom: 12px;
+            color: #1a2a6c;
+        }
+
+        .download-card p {
+            color: #666;
+            font-size: 14px;
+            flex-grow: 1;
+            margin-bottom: 15px;
+        }
+
+        .download-info {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            font-size: 13px;
+            color: #666;
+        }
+
+        .download-info span {
+            display: block;
+            margin: 3px 0;
+        }
+
+        /* Estilo para o botão de download */
+        .download-btn {
+            background: #1a2a6c;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: auto;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 14px;
+            min-width: 140px;
+            align-self: center;
+        }
+
+        .download-btn i {
+            margin-right: 5px;
+        }
+
+        .download-btn:hover {
+            background: #2c3e99;
+            transform: translateY(-2px);
+        }
+
+        /* ===== FIM DA SEÇÃO DE DOWNLOADS ===== */
+
+        .dashboard-section {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .dashboard-section h2 {
+            font-size: 22px;
+            color: #1a2a6c;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: #f8f9fa;
+            padding: 18px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-card h3 {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .stat-card .number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #1a2a6c;
+        }
+
+        .recent-activity {
+            margin-top: 25px;
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-icon {
+            width: 35px;
+            height: 35px;
+            background: #f0f4ff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            color: #1a2a6c;
+            flex-shrink: 0;
+        }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-content p {
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .activity-time {
+            font-size: 11px;
+            color: #999;
+        }
+
+        .message {
+            padding: 12px;
+            border-radius: 5px;
+            margin: 15px 0;
+            display: none;
+            font-size: 14px;
+        }
+
+        .message.success {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 1px solid #4caf50;
+        }
+
+        .message.error {
+            background: #ffebee;
+            color: #d32f2f;
+            border: 1px solid #f44336;
+        }
+
+        /* ===== ESTILO DO FOOTER ===== */
+        footer {
+            background-color: #1a2a6c;
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+            margin-top: 40px;
+            font-size: 14px;
+        }
+
+        /* ===== MEDIA QUERIES PARA RESPONSIVIDADE ===== */
+        @media (min-width: 1200px) {
+            .features, .games-container, .downloads-container {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 1199px) and (min-width: 993px) {
+            .features, .games-container, .downloads-container {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 992px) and (min-width: 769px) {
+            .features {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .games-container, .downloads-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 15px;
+            }
+            
+            .logo {
+                margin-bottom: 10px;
+                font-size: 18px;
+            }
+            
+            .nav-links {
+                width: 100%;
+                justify-content: space-between;
+                margin-top: 10px;
+                gap: 10px;
+            }
+            
+            .user-info {
+                margin-right: 0;
+                order: 1;
+            }
+            
+            .admin-btn {
+                order: 2;
+                padding: 6px 10px;
+                font-size: 13px;
+            }
+            
+            .logout-btn {
+                order: 3;
+                padding: 6px 10px;
+                font-size: 13px;
+            }
+            
+            .container {
+                margin: 20px auto;
+            }
+            
+            .welcome-section h1 {
+                font-size: 24px;
+            }
+            
+            .welcome-section p {
+                font-size: 15px;
+            }
+            
+            .features, .games-container, .downloads-container {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .feature-card, .game-card, .download-card {
+                padding: 20px;
+            }
+            
+            .dashboard-section {
+                padding: 20px;
+            }
+            
+            .stats {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            
+            .stat-card {
+                padding: 15px;
+            }
+            
+            .stat-card .number {
+                font-size: 22px;
+            }
+            
+            .game-btn, .download-btn {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .navbar {
+                padding: 12px;
+            }
+            
+            .logo {
+                font-size: 16px;
+            }
+            
+            .logo i {
+                margin-right: 8px;
+            }
+            
+            .nav-links {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+            
+            .user-info, .admin-btn, .logout-btn {
+                width: 100%;
+                justify-content: center;
+                margin: 5px 0;
+            }
+            
+            .admin-btn, .logout-btn {
+                text-align: center;
+                display: block;
+            }
+            
+            .welcome-section {
+                margin-bottom: 30px;
+            }
+            
+            .welcome-section h1 {
+                font-size: 22px;
+            }
+            
+            .feature-card, .game-card, .download-card {
+                padding: 18px;
+            }
+            
+            .feature-icon, .game-icon, .download-icon {
+                font-size: 30px;
+            }
+            
+            .dashboard-section {
+                padding: 18px;
+            }
+            
+            .dashboard-section h2 {
+                font-size: 20px;
+            }
+            
+            .activity-item {
+                flex-direction: column;
+                text-align: center;
+                padding: 15px 10px;
+            }
+            
+            .activity-icon {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .logo span {
+                font-size: 15px;
+            }
+            
+            .welcome-section h1 {
+                font-size: 20px;
+            }
+            
+            .feature-card h3, .game-card h3, .download-card h3 {
+                font-size: 16px;
+            }
+            
+            .stat-card .number {
+                font-size: 20px;
+            }
+            
+            .activity-content p {
+                font-size: 13px;
+            }
+        }
+
+        /* Melhorias de acessibilidade para mobile */
+        @media (max-width: 768px) and (orientation: landscape) {
+            .navbar {
+                flex-direction: row;
+                align-items: center;
+            }
+            
+            .logo {
+                margin-bottom: 0;
+                flex: 1;
+            }
+            
+            .nav-links {
+                flex-direction: row;
+                justify-content: flex-end;
+                margin-top: 0;
+                width: auto;
+            }
+        }
+
+        /* Ajustes para toque em dispositivos móveis */
+        @media (hover: none) {
+            .feature-card:hover, .game-card:hover, .download-card:hover {
+                transform: none;
+            }
+            
+            .admin-btn:hover, .logout-btn:hover, .game-btn:hover, .download-btn:hover {
+                transform: none;
+            }
+            
+            .admin-btn:hover {
+                background: #00ffcc;
+            }
+            
+            .logout-btn:hover {
+                background: transparent;
+            }
+            
+            .game-btn:hover {
+                background: #00ffcc;
+            }
+            
+            .download-btn:hover {
+                background: #1a2a6c;
+            }
+        }
+
+        /* Melhorias de usabilidade para formulários em mobile */
+        button, .admin-btn, .game-btn, .download-btn {
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+
+        /* Prevenir zoom em inputs no iOS */
+        @media screen and (max-width: 768px) {
+            input, select, textarea {
+                font-size: 16px; /* Evita zoom no iOS */
+            }
+        }
+
+        .game-btn.disabled {
+            pointer-events: none;      /* Bloqueia cliques */
+            background-color: #999999;  /* Botão cinza */
+            color: #ffffff;            /* Texto branco para contraste */
+            cursor: not-allowed;       /* Cursor tipo "proibido" */
+            opacity: 1;                /* Mantém opacidade total */
+        }

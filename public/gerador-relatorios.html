@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Relatórios | LODS Works</title>
+    <link rel="stylesheet" href="css/style_lods_works.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="images/favicon.ico?v=2" type="image/x-icon">
+    <script src="https://cdn.jsdelivr.net/npm/docx-templates@latest/dist/docx-templates.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <span class="logo-text">LODS</span>
+                <span class="logo-highlight">Works</span>
+            </div>
+            <nav class="nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html#apps">Aplicações</a></li>
+                    <li><a href="index.html#about">Sobre</a></li>
+                    <li><a href="index.html#contact">Contato</a></li>
+                </ul>
+            </nav>
+            <div class="mobile-menu">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <main class="app-detail">
+        <!-- Hero Section Específica -->
+        <section class="app-hero" style="background: linear-gradient(135deg, #0066ff 0%, #0a0a1a 100%);">
+            <div class="container">
+                <div class="app-hero-content">
+                    <h1><i class="fas fa-file-word"></i> Gerador de Relatórios</h1>
+                    <p class="subtitle">Substituição automática em documentos Word e geração de PDFs personalizados</p>
+                    <div class="app-badges">
+                        <span class="badge"><i class="fas fa-check-circle"></i> Templates personalizáveis</span>
+                        <span class="badge"><i class="fas fa-magic"></i> Substituição automática</span>
+                        <span class="badge"><i class="fas fa-file-pdf"></i> Exportação para PDF</span>
+                    </div>
+                    <a href="#formulario" class="btn btn-primary">Criar Documento</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção de Recursos -->
+        <section class="app-features">
+            <div class="container">
+                <h2><span class="highlight">Funcionalidades</span> Principais</h2>
+                
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-file-upload"></i>
+                        </div>
+                        <h3>Templates Personalizados</h3>
+                        <p>Use nossos modelos pré-definidos ou faça upload do seu próprio template DOCX com placeholders para substituição automática.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <h3>Substituição Inteligente</h3>
+                        <p>Preencha o formulário e todos os placeholders no documento serão automaticamente substituídos pelos valores informados.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-file-export"></i>
+                        </div>
+                        <h3>Exportação Completa</h3>
+                        <p>Gere documentos em formato DOCX ou converta automaticamente para PDF com um único clique.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção do Formulário -->
+        <section id="formulario" class="app-demo">
+            <div class="container">
+                <h2>Crie seu <span class="highlight">Documento Personalizado</span></h2>
+                
+                <div class="demo-container">
+                    <div class="demo-description">
+                        <h3>Preencha os dados</h3>
+                        <p>Informe os dados necessários para gerar seu documento personalizado:</p>
+                        <ul class="demo-list">
+                            <li><i class="fas fa-check"></i> Use templates pré-definidos ou seus próprios</li>
+                            <li><i class="fas fa-check"></i> Adicione campos personalizados conforme necessário</li>
+                            <li><i class="fas fa-check"></i> Visualize o resultado antes de gerar</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="demo-embed">
+                        <div class="report-form-container">
+                            <form id="reportForm" class="report-form">
+                                <div class="form-group">
+                                    <label for="templateSource">Fonte do Template:</label>
+                                    <select id="templateSource" class="form-control" required>
+                                        <option value="">Selecione uma opção...</option>
+                                        <option value="predefined">Modelo Pré-definido</option>
+                                        <option value="custom">Upload de Template</option>
+                                    </select>
+                                </div>
+                                
+                                <div id="predefinedTemplateSection" class="template-section">
+                                    <div class="form-group">
+                                        <label for="templateSelect">Modelo de Documento:</label>
+                                        <select id="templateSelect" class="form-control">
+                                            <option value="">Selecione um modelo...</option>
+                                            <option value="termo_transferencia.docx">Termo de Transferência</option>
+                                            <option value="contrato_servicos.docx">Contrato de Serviços</option>
+                                            <option value="relatorio_tecnico.docx">Relatório Técnico</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div id="customTemplateSection" class="template-section" style="display: none;">
+                                    <div class="form-group">
+                                        <label for="templateUpload">Upload do Template:</label>
+                                        <input type="file" id="templateUpload" class="form-control" accept=".docx">
+                                        <small class="form-text">Envie um arquivo .docx com os placeholders</small>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="placeholdersList">Placeholders no Documento:</label>
+                                        <textarea id="placeholdersList" class="form-control" rows="3" 
+                                                  placeholder="Liste os placeholders usados no documento, separados por vírgula (ex: [NOME], [CPF], [DATA])"></textarea>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="clientName">Nome do Cliente:</label>
+                                    <input type="text" id="clientName" class="form-control" placeholder="Digite o nome completo" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label>Gênero:</label>
+                                    <div class="gender-buttons">
+                                        <button type="button" id="maleBtn" class="gender-btn" data-value="masculino">
+                                            <i class="fas fa-mars"></i> Masculino
+                                        </button>
+                                        <button type="button" id="femaleBtn" class="gender-btn" data-value="feminino">
+                                            <i class="fas fa-venus"></i> Feminino
+                                        </button>
+                                    </div>
+                                    <input type="hidden" id="gender" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="clientEmail">E-mail:</label>
+                                    <input type="email" id="clientEmail" class="form-control" placeholder="Digite o e-mail" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="clientCpf">CPF:</label>
+                                    <input type="text" id="clientCpf" class="form-control cpf-mask" placeholder="000.000.000-00" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="documentDate">Data do Documento:</label>
+                                    <input type="date" id="documentDate" class="form-control" required>
+                                </div>
+                                
+                                <div id="dynamicFields">
+                                    <!-- Campos dinâmicos serão inseridos aqui -->
+                                </div>
+                                
+                                <div class="form-group">
+                                    <button type="button" id="addFieldBtn" class="btn btn-secondary">
+                                        <i class="fas fa-plus"></i> Adicionar Campo
+                                    </button>
+                                </div>
+                                
+                                <div class="form-actions">
+                                    <button type="button" id="generateBtn" class="btn btn-primary">
+                                        <i class="fas fa-file-word"></i> Gerar Documento
+                                    </button>
+                                    <button type="button" id="previewBtn" class="btn btn-secondary">
+                                        <i class="fas fa-eye"></i> Pré-visualizar
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção de Pré-visualização -->
+        <section class="app-integrations">
+            <div class="container">
+                <h2>Pré-visualização do <span class="highlight">Documento</span></h2>
+                <div class="document-preview" id="documentPreview">
+                    <div class="preview-header">
+                        <h3>Visualização do Resultado</h3>
+                        <div class="preview-actions">
+                            <button id="downloadPreview" class="btn btn-small">
+                                <i class="fas fa-download"></i> Baixar DOCX
+                            </button>
+                            <button id="downloadPdf" class="btn btn-small">
+                                <i class="fas fa-file-pdf"></i> Baixar PDF
+                            </button>
+                        </div>
+                    </div>
+                    <div class="preview-content" id="previewContent">
+                        <p>Preencha o formulário para visualizar como ficará seu documento.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <span class="logo-text">LODS</span>
+                    <span class="logo-highlight">Works</span>
+                </div>
+                <p>&copy; 2025 LODS Works. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+    <script src="js/report_generator.js"></script>
+</body>
+</html>

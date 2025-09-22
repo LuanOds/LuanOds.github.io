@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cálculo Desconto com Bandeira (Grupo B)</title>
+  <link rel="stylesheet" href="css/calculadoras.css">
+  <link rel="icon" href="images/favicon.ico?v=2" type="image/x-icon">
+  <meta http-equiv="Pragma" content="no-cache">
+</head>
+<body>
+<div class="container">
+  <h1>Cálculo Bandeira (Grupo B)</h1>
+
+  <label>Adicional de Bandeira (G) – R$</label>
+  <input type="number" step="0.01" id="G">
+
+  <label>Consumo (F) – kWh</label>
+  <input type="number" step="0.01" id="F">
+
+  <label>Consumo Compensado (I) – kWh</label>
+  <input type="number" step="0.01" id="I">
+
+  <label>Tarifa do Consumo (T) – R$/kWh</label>
+  <input type="number" step="0.0001" id="T" value="1.0655">
+
+  <label>Percentual de Desconto (%)</label>
+  <input type="number" step="0.01" id="D" value="20">
+
+  <button onclick="calcular()">Calcular</button>
+
+  <div class="result" id="resultado" style="display:none;">
+    <p id="resE">Economia (E): R$ 0,00</p>
+    <p id="resZ">Repasse (Z): R$ 0,00</p>
+    <p id="resEBT">Economia Base Tarifária (E.BT): R$ 0,00</p>
+    <p id="resNE">Nova Economia (NE): R$ 0,00</p>
+    <p id="resBT">%BT: 0,00%</p>
+  </div>
+</div>
+<script src="js/calculadoras.js"></script>
+</body>
+</html>

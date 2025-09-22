@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo da Memória</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c 0%, #2c3e99 100%);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .game-info {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 500px;
+            margin-bottom: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+        }
+        
+        .game-board {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-gap: 10px;
+            max-width: 500px;
+            width: 100%;
+            margin-bottom: 30px;
+        }
+        
+        .card {
+            height: 100px;
+            background-color: #1a2a6c;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2rem;
+            transform-style: preserve-3d;
+            transition: transform 0.5s;
+        }
+        
+        .card.flipped {
+            transform: rotateY(180deg);
+        }
+        
+        .card .front, .card .back {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            backface-visibility: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 5px;
+        }
+        
+        .card .front {
+            background-color: #1a2a6c;
+        }
+        
+        .card .back {
+            background-color: white;
+            color: #1a2a6c;
+            transform: rotateY(180deg);
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        button {
+            background: #00ffcc;
+            color: #1a2a6c;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+        }
+        
+        button i {
+            margin-right: 8px;
+        }
+        
+        button:hover {
+            background: #00e6b8;
+            transform: translateY(-2px);
+        }
+        
+        @media (max-width: 500px) {
+            .card {
+                height: 80px;
+            }
+            
+            .game-board {
+                grid-gap: 8px;
+            }
+            
+            .buttons {
+                flex-direction: column;
+                width: 100%;
+                max-width: 500px;
+            }
+            
+            button {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Jogo da Memória</h1>
+        <p>Encontre os pares correspondentes!</p>
+    </div>
+    
+    <div class="game-info">
+        <div class="moves">Movimentos: <span id="moves-count">0</span></div>
+        <div class="timer">Tempo: <span id="time">0</span>s</div>
+    </div>
+    
+    <div class="game-board" id="game-board"></div>
+    
+    <div class="buttons">
+        <button id="restart-btn"><i class="fas fa-redo"></i> Reiniciar Jogo</button>
+        <button id="back-btn"><i class="fas fa-arrow-left"></i> Voltar</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const gameBoard = document.getElementById('game-board');
+            const movesCount = document.getElementById('moves-count');
+            const timeElement = document.getElementById('time');
+            const restartBtn = document.getElementById('restart-btn');
+            const backBtn = document.getElementById('back-btn');
+            
+            let cards = [];
+            let hasFlippedCard = false;
+            let lockBoard = false;
+            let firstCard, secondCard;
+            let moves = 0;
+            let matchedPairs = 0;
+            let startTime;
+            let timerInterval;
+            
+            // Ícones para as cartas (pares)
+            const cardIcons = ['⭐', '🚀', '❤️', '🔑', '🎵', '🌙', '⚡', '🌈'];
+            
+            // Inicializar o jogo
+            function initGame() {
+                clearInterval(timerInterval);
+                moves = 0;
+                matchedPairs = 0;
+                movesCount.textContent = moves;
+                timeElement.textContent = '0';
+                gameBoard.innerHTML = '';
+                
+                // Duplicar e embaralhar os ícones
+                cards = [...cardIcons, ...cardIcons];
+                cards.sort(() => Math.random() - 0.5);
+                
+                // Criar as cartas
+                cards.forEach((icon, index) => {
+                    const card = document.createElement('div');
+                    card.classList.add('card');
+                    card.dataset.icon = icon;
+                    
+                    const front = document.createElement('div');
+                    front.classList.add('front');
+                    
+                    const back = document.createElement('div');
+                    back.classList.add('back');
+                    back.textContent = icon;
+                    
+                    card.appendChild(front);
+                    card.appendChild(back);
+                    
+                    card.addEventListener('click', flipCard);
+                    gameBoard.appendChild(card);
+                });
+                
+                // Iniciar o temporizador
+                startTime = Date.now();
+                timerInterval = setInterval(updateTimer, 1000);
+            }
+            
+            function flipCard() {
+                if (lockBoard) return;
+                if (this === firstCard) return;
+                if (this.classList.contains('flipped')) return;
+                
+                this.classList.add('flipped');
+                
+                if (!hasFlippedCard) {
+                    // Primeira carta virada
+                    hasFlippedCard = true;
+                    firstCard = this;
+                    return;
+                }
+                
+                // Segunda carta virada
+                secondCard = this;
+                moves++;
+                movesCount.textContent = moves;
+                
+                checkForMatch();
+            }
+            
+            function checkForMatch() {
+                let isMatch = firstCard.dataset.icon === secondCard.dataset.icon;
+                
+                if (isMatch) {
+                    disableCards();
+                    matchedPairs++;
+                    
+                    // Verificar se o jogo terminou
+                    if (matchedPairs === cardIcons.length) {
+                        clearInterval(timerInterval);
+                        setTimeout(() => {
+                            alert(`Parabéns! Você completou o jogo em ${moves} movimentos e ${timeElement.textContent} segundos!`);
+                        }, 500);
+                    }
+                } else {
+                    unflipCards();
+                }
+            }
+            
+            function disableCards() {
+                firstCard.removeEventListener('click', flipCard);
+                secondCard.removeEventListener('click', flipCard);
+                resetBoard();
+            }
+            
+            function unflipCards() {
+                lockBoard = true;
+                
+                setTimeout(() => {
+                    firstCard.classList.remove('flipped');
+                    secondCard.classList.remove('flipped');
+                    resetBoard();
+                }, 1000);
+            }
+            
+            function resetBoard() {
+                [hasFlippedCard, lockBoard] = [false, false];
+                [firstCard, secondCard] = [null, null];
+            }
+            
+            function updateTimer() {
+                const elapsedTime = Math.floor((Date.now() - startTime) / 1000);
+                timeElement.textContent = elapsedTime;
+            }
+            
+            restartBtn.addEventListener('click', initGame);
+            
+            backBtn.addEventListener('click', () => {
+                // Voltar para a landing page
+                window.location.href = '../landing.html';
+            });
+            
+            // Iniciar o jogo
+            initGame();
+        });
+    </script>
+</body>
+</html>
