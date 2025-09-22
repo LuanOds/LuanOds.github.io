@@ -131,7 +131,7 @@ function login() {
         {usuario:"EDUARDO", senha:"Temp@ea82", ativo:true},
         {usuario:"KETLYN", senha:"Temp@ea82", ativo:true},
         {usuario:"CLARA", senha:"123456", ativo:true},
-        {usuario:"LUAN", senha:"123456", ativo:true}
+        {usuario:"LUAN", senha:"Temp@ea82", ativo:true}
     ];
 
     const user = usuarios.find(u => u.usuario === usuario && u.senha === senha);
